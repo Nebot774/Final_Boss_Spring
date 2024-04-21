@@ -5,7 +5,7 @@ import com.example.final_boss_spring.service.NasaService;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class NasaServiceTest {
+class ImagenAstronomicaDelDiaServiceTest {
 
     @Test
     void obtenerAPODTest() {

@@ -16,11 +16,14 @@ public class NasaService {
     private static final String API_KEY = "9dgFAENW1dghiXqP2wPmdCDEOsCAISYbrm3XW2tc";
     private static final String BASE_URL = "https://api.nasa.gov/planetary/apod";
 
+    private static final String BASE_URL2 = "https://api.nasa.gov/planetary/apod?api_key=9dgFAENW1dghiXqP2wPmdCDEOsCAISYbrm3XW2tc";
+
 
     public ApodData obtenerAPOD(String fecha) throws DataNotFoundException {
         try {
             // Construir la URL con la fecha proporcionada
             URL url = new URL(BASE_URL + "?api_key=" + API_KEY + "&date=" + fecha);
+            //URL url = new URL(BASE_URL2 );
 
             // Abrir la conexión HTTP
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();

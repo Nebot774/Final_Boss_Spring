@@ -1,5 +1,7 @@
 package com.example.final_boss_spring.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ApodData {
 
     private String date;
@@ -8,16 +10,30 @@ public class ApodData {
     private String serviceVersion;
     private String title;
     private String url;
+    private String copyright;
 
     // Constructor, getters y setters
 
-    public ApodData(String date, String explanation, String mediaType, String serviceVersion, String title, String url) {
+    public ApodData() {
+        // Constructor predeterminado
+    }
+    public ApodData(String date, String explanation, String mediaType, String serviceVersion, String title, String url, String copyright) {
         this.date = date;
         this.explanation = explanation;
         this.mediaType = mediaType;
         this.serviceVersion = serviceVersion;
         this.title = title;
         this.url = url;
+        this.copyright = copyright;
+    }
+
+
+    public String getCopyright() {
+        return copyright;
+    }
+
+    public void setCopyright(String copyright) {
+        this.copyright = copyright;
     }
 
     public String getDate() {

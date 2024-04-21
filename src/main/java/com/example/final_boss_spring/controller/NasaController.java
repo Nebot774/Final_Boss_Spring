@@ -1,6 +1,8 @@
 package com.example.final_boss_spring.controller;
 
 import com.example.final_boss_spring.exception.DataNotFoundException;
+import com.example.final_boss_spring.model.ApodData;
+import com.example.final_boss_spring.service.NasaService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,13 @@ public class NasaController {
     @GetMapping("/apod")
     public ResponseEntity<?> obtenerImagenDelDia() {
         try {
-            ApodData apodData = nasaService.obtenerAPOD();
+            // Obtener la fecha actual en el formato YYYY-MM-DD
+            String fechaActual = LocalDate.now().toString();
+
+            // Llamar al método obtenerAPOD() con la fecha actual
+            ApodData apodData = nasaService.obtenerAPOD(fechaActual);
+
+            // Devolver la respuesta con los datos obtenidos
             return ResponseEntity.ok(apodData);
         } catch (DataNotFoundException e) {
             return ResponseEntity.notFound().build();
@@ -33,65 +41,68 @@ public class NasaController {
         }
     }
 
-    // Método para obtener información sobre asteroides cercanos
-    @GetMapping("/neows")
-    public ResponseEntity<?> obtenerAsteroidesCercanos() {
-        try {
-            return ResponseEntity.ok().body(nasaService.obtenerNeoWs());
-        } catch (DataNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
 
-    // Método para obtener fotos de los Mars Rovers
-    @GetMapping("/mars-rovers/{rover}/photos")
-    public ResponseEntity<?> obtenerFotosMarsRovers(@PathVariable String rover, @RequestParam int sol) {
-        try {
-            return ResponseEntity.ok().body(nasaService.obtenerFotosMarsRovers(rover, sol));
-        } catch (DataNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
+//    // Método para obtener información sobre asteroides cercanos
+//    @GetMapping("/neows")
+//    public ResponseEntity<?> obtenerAsteroidesCercanos() {
+//        try {
+//            return ResponseEntity.ok().body(nasaService.obtenerNeoWs());
+//        } catch (DataNotFoundException e) {
+//            return ResponseEntity.notFound().build();
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
+//    }
+//
+//    // Método para obtener fotos de los Mars Rovers
+//    @GetMapping("/mars-rovers/{rover}/photos")
+//    public ResponseEntity<?> obtenerFotosMarsRovers(@PathVariable String rover, @RequestParam int sol) {
+//        try {
+//            return ResponseEntity.ok().body(nasaService.obtenerFotosMarsRovers(rover, sol));
+//        } catch (DataNotFoundException e) {
+//            return ResponseEntity.notFound().build();
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
+//    }
+//
+//    // Método para buscar en la galería de imágenes y vídeos
+//    @GetMapping("/image-gallery")
+//    public ResponseEntity<?> buscarEnGaleria(@RequestParam String query) {
+//        try {
+//            return ResponseEntity.ok().body(nasaService.buscarEnGaleria(query));
+//        } catch (DataNotFoundException e) {
+//            return ResponseEntity.notFound().build();
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
+//    }
+//
+//    // Método para obtener imágenes de la Tierra desde el espacio (EPIC)
+//    @GetMapping("/epic")
+//    public ResponseEntity<?> obtenerImagenesTierraEspacio() {
+//        try {
+//            return ResponseEntity.ok().body(nasaService.obtenerImagenesEPIC());
+//        } catch (DataNotFoundException e) {
+//            return ResponseEntity.notFound().build();
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
+//    }
+//
+//    // Método para obtener la imagen del día de nacimiento
+//    @GetMapping("/apod/birthday")
+//    public ResponseEntity<?> obtenerImagenDiaNacimiento(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fecha) {
+//        try {
+//            return ResponseEntity.ok().body(nasaService.obtenerImagenDiaNacimiento(fecha));
+//        } catch (DataNotFoundException e) {
+//            return ResponseEntity.notFound().build();
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
+//    }
 
-    // Método para buscar en la galería de imágenes y vídeos
-    @GetMapping("/image-gallery")
-    public ResponseEntity<?> buscarEnGaleria(@RequestParam String query) {
-        try {
-            return ResponseEntity.ok().body(nasaService.buscarEnGaleria(query));
-        } catch (DataNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
 
-    // Método para obtener imágenes de la Tierra desde el espacio (EPIC)
-    @GetMapping("/epic")
-    public ResponseEntity<?> obtenerImagenesTierraEspacio() {
-        try {
-            return ResponseEntity.ok().body(nasaService.obtenerImagenesEPIC());
-        } catch (DataNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    // Método para obtener la imagen del día de nacimiento
-    @GetMapping("/apod/birthday")
-    public ResponseEntity<?> obtenerImagenDiaNacimiento(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fecha) {
-        try {
-            return ResponseEntity.ok().body(nasaService.obtenerImagenDiaNacimiento(fecha));
-        } catch (DataNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
 }
 
 

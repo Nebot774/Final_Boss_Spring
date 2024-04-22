@@ -42,17 +42,29 @@ public class NasaController {
     }
 
 
-//    // Método para obtener información sobre asteroides cercanos
-//    @GetMapping("/neows")
-//    public ResponseEntity<?> obtenerAsteroidesCercanos() {
-//        try {
-//            return ResponseEntity.ok().body(nasaService.obtenerNeoWs());
-//        } catch (DataNotFoundException e) {
-//            return ResponseEntity.notFound().build();
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
-//    }
+    // Método para obtener información sobre asteroides cercanos en un rango de fechas
+    @GetMapping("/neows")
+    public ResponseEntity<?> obtenerAsteroidesCercanos(@RequestParam String startDate, @RequestParam String endDate) {
+        try {
+            return ResponseEntity.ok().body(nasaService.obtenerNeoWsPorFecha(startDate, endDate));
+        } catch (DataNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    // Método para obtener información sobre un asteroide específico por su ID
+    @GetMapping("/neows/{asteroideId}")
+    public ResponseEntity<?> obtenerAsteroidePorId(@PathVariable String asteroideId) {
+        try {
+            return ResponseEntity.ok().body(nasaService.obtenerNeoWsPorId(asteroideId));
+        } catch (DataNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 //
 //    // Método para obtener fotos de los Mars Rovers
 //    @GetMapping("/mars-rovers/{rover}/photos")

@@ -87,7 +87,7 @@ public class NasaService {
         }
     }
 
-    public NeoWsData obtenerAsteroidePorId(String asteroideId) throws DataNotFoundException {
+    public NeoWsData obtenerNeoWsPorId(String asteroideId) throws DataNotFoundException {
         try {
             // Construir la URL con el ID del asteroide
             String urlString = "https://api.nasa.gov/neo/rest/v1/neo/" + asteroideId + "?api_key=" + API_KEY;

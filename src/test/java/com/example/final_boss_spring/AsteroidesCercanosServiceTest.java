@@ -18,7 +18,7 @@ public class AsteroidesCercanosServiceTest {
     @Test
     public void obtenerAsteroidePorIdTest() {
         NasaService nasaService = new NasaService();
-        NeoWsData result = nasaService.obtenerAsteroidePorId("2465633");
+        NeoWsData result = nasaService.obtenerNeoWsPorId("2465633");
         assertNotNull(result);
         System.out.println(result.toString());
     }

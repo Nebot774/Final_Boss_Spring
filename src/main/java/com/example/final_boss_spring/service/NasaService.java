@@ -1,6 +1,7 @@
 package com.example.final_boss_spring.service;
 
 import com.example.final_boss_spring.model.ApodData;
+import com.example.final_boss_spring.model.NeoWsData;
 import org.springframework.stereotype.Service;
 import com.example.final_boss_spring.exception.DataNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -52,10 +53,74 @@ public class NasaService {
         }
     }
 
-//    public NeoWsData obtenerNeoWs() throws DataNotFoundException {
-//        // Aquí va la lógica para obtener información sobre asteroides cercanos
-//        return null;
-//    }
+    public NeoWsData obtenerNeoWsPorFecha(String startDate, String endDate) throws DataNotFoundException {
+        try {
+            // Construir la URL con los parámetros de fecha proporcionados
+            String urlString = "https://api.nasa.gov/neo/rest/v1/feed?start_date=" + startDate +
+                    "&end_date=" + endDate + "&api_key=" + API_KEY;
+            URL url = new URL(urlString);
+
+            // Abrir la conexión HTTP
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            // Configurar la solicitud HTTP
+            connection.setRequestMethod("GET");
+
+            // Leer la respuesta de la API
+            Scanner scanner = new Scanner(connection.getInputStream());
+            StringBuilder response = new StringBuilder();
+            while (scanner.hasNextLine()) {
+                response.append(scanner.nextLine());
+            }
+            scanner.close();
+
+            // Analizar la respuesta JSON y convertirla en un objeto NeoWsData
+            ObjectMapper objectMapper = new ObjectMapper();
+            NeoWsData neoWsData = objectMapper.readValue(response.toString(), NeoWsData.class);
+
+            // Retornar el objeto NeoWsData
+            return neoWsData;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new DataNotFoundException("No se pudo obtener la información de asteroides cercanos.");
+        }
+    }
+
+    public NeoWsData obtenerAsteroidePorId(String asteroideId) throws DataNotFoundException {
+        try {
+            // Construir la URL con el ID del asteroide
+            String urlString = "https://api.nasa.gov/neo/rest/v1/neo/" + asteroideId + "?api_key=" + API_KEY;
+            URL url = new URL(urlString);
+
+            // Abrir la conexión HTTP
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            // Configurar la solicitud HTTP
+            connection.setRequestMethod("GET");
+
+            // Leer la respuesta de la API
+            Scanner scanner = new Scanner(connection.getInputStream());
+            StringBuilder response = new StringBuilder();
+            while (scanner.hasNextLine()) {
+                response.append(scanner.nextLine());
+            }
+            scanner.close();
+
+            // Analizar la respuesta JSON y convertirla en un objeto NeoWsData
+            ObjectMapper objectMapper = new ObjectMapper();
+            NeoWsData neoWsData = objectMapper.readValue(response.toString(), NeoWsData.class);
+
+            // Retornar el objeto NeoWsData
+            return neoWsData;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new DataNotFoundException("No se pudo obtener información sobre el asteroide con ID: " + asteroideId);
+        }
+    }
+
+
 //
 //    public MarsRoverData obtenerFotosMarsRovers(String rover, int sol) throws DataNotFoundException {
 //        // Aquí va la lógica para obtener fotos de los Mars Rovers

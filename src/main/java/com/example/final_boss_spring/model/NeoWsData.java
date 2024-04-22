@@ -1,5 +1,7 @@
 package com.example.final_boss_spring.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.List;
@@ -10,8 +12,12 @@ import java.util.Map;
  * Utiliza clases internas para mapear estructuras anidadas y proporcionar un manejo claro de los datos complejos.
  */
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class NeoWsData {
 
+
+    private String id; // Nuevo campo agregado aquí
+    private String name;
     private Links links;
     private int element_count;
     private Map<String, List<NearEarthObject>> near_earth_objects;
@@ -19,6 +25,7 @@ public class NeoWsData {
     /**
      * Clase para almacenar los enlaces de navegación proporcionados en la respuesta de la API.
      */
+    @JsonIgnoreProperties(ignoreUnknown = true)
     @Data
     public static class Links {
         private String next;
@@ -38,7 +45,10 @@ public class NeoWsData {
         private String nasa_jpl_url;
         private double absolute_magnitude_h;
         private EstimatedDiameter estimated_diameter;
-        private boolean is_potentially_hazardous_asteroid;
+        @JsonProperty("is_sentry_object")
+        private boolean isSentryObject;
+        @JsonProperty("is_potentially_hazardous_asteroid")
+        private boolean isPotentiallyHazardousAsteroid;
         private List<CloseApproachData> close_approach_data;
         private boolean is_sentry_object;
 

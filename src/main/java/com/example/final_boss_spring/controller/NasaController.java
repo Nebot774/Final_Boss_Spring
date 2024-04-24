@@ -3,10 +3,12 @@ package com.example.final_boss_spring.controller;
 import com.example.final_boss_spring.exception.DataNotFoundException;
 import com.example.final_boss_spring.model.ApodData;
 import com.example.final_boss_spring.service.NasaService;
+import org.apache.coyote.BadRequestException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ServerErrorException;
 
 import java.time.LocalDate;
 
@@ -65,6 +67,26 @@ public class NasaController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    // Método para buscar en la galería de imágenes y vídeos
+    @GetMapping("/image-gallery")
+    public ResponseEntity<?> buscarEnGaleria(@RequestParam String query, @RequestParam(required = false) String mediaType, @RequestParam(required = false) String yearStart, @RequestParam(required = false) String yearEnd) {
+        try {
+            return ResponseEntity.ok().body(nasaService.buscarGaleria(query, mediaType, yearStart, yearEnd));
+        } catch (BadRequestException e) {
+            return ResponseEntity.badRequest().body("La solicitud es incorrecta, a menudo debido a la falta de un parámetro requerido.");
+        } catch (DataNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (ServerErrorException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocurrió un error en el servidor.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+
+
+
 //
 //    // Método para obtener fotos de los Mars Rovers
 //    @GetMapping("/mars-rovers/{rover}/photos")
@@ -78,17 +100,7 @@ public class NasaController {
 //        }
 //    }
 //
-//    // Método para buscar en la galería de imágenes y vídeos
-//    @GetMapping("/image-gallery")
-//    public ResponseEntity<?> buscarEnGaleria(@RequestParam String query) {
-//        try {
-//            return ResponseEntity.ok().body(nasaService.buscarEnGaleria(query));
-//        } catch (DataNotFoundException e) {
-//            return ResponseEntity.notFound().build();
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
-//    }
+
 //
 //    // Método para obtener imágenes de la Tierra desde el espacio (EPIC)
 //    @GetMapping("/epic")

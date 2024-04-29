@@ -9,13 +9,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ServerErrorException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 
+
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/nasa")
 public class NasaController {
 
+    private final Logger logger = LoggerFactory.getLogger(NasaController.class);
     // Servicio inyectado para manejar la lógica de negocio
     private final NasaService nasaService;
 
@@ -28,12 +33,14 @@ public class NasaController {
     @GetMapping("/apod")
     public ResponseEntity<?> obtenerImagenDelDia() {
         try {
+            logger.info("Iniciando la obtención de la imagen del día");
             // Obtener la fecha actual en el formato YYYY-MM-DD
             String fechaActual = LocalDate.now().toString();
 
             // Llamar al método obtenerAPOD() con la fecha actual
             ApodData apodData = nasaService.obtenerAPOD(fechaActual);
 
+            logger.info("Imagen del día obtenida con éxito");
             // Devolver la respuesta con los datos obtenidos
             return ResponseEntity.ok(apodData);
         } catch (DataNotFoundException e) {

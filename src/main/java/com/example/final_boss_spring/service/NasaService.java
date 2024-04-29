@@ -128,6 +128,51 @@ public class NasaService {
         }
     }
 
+    public GalleryData buscarGaleriaQuery(String query) throws DataNotFoundException, BadRequestException, ServerErrorException {
+        String baseUrl = "https://images-api.nasa.gov/search";
+
+        try {
+            // Codificar los parámetros de la consulta
+            String encodedQuery = URLEncoder.encode(query, "UTF-8");
+
+
+            // Construir la URL con los parámetros de consulta codificados
+            String urlString = baseUrl + "?q=" + encodedQuery  + "&api_key=" + API_KEY;
+            // Iniciar la conexión y realizar la petición GET
+            URL url = new URL(urlString);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+
+            // Comprobar el código de respuesta HTTP
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                Scanner scanner = new Scanner(url.openStream());
+                StringBuilder response = new StringBuilder();
+                while (scanner.hasNext()) {
+                    response.append(scanner.next());
+                }
+                scanner.close();
+
+                // Convertir la respuesta en cadena JSON a un objeto GalleryData utilizando ObjectMapper
+                ObjectMapper objectMapper = new ObjectMapper();
+                return objectMapper.readValue(response.toString(), GalleryData.class);
+            } else if (responseCode == HttpURLConnection.HTTP_BAD_REQUEST) {
+                throw new BadRequestException("La solicitud es incorrecta, a menudo debido a la falta de un parámetro requerido.");
+            } else if (responseCode == HttpURLConnection.HTTP_NOT_FOUND) {
+                throw new DataNotFoundException("El recurso solicitado no existe.");
+            } else if (responseCode >= HttpURLConnection.HTTP_INTERNAL_ERROR) {
+                throw new MyServerErrorException("Ocurrió un error en el servidor.");
+            } else {
+                throw new RuntimeException("Respuesta inesperada del servidor: " + responseCode);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new DataNotFoundException("No se pudo obtener la información de la galería de la NASA debido a un error de red.");
+        }
+    }
+
+
     public GalleryData buscarGaleria(String query, String mediaType, String yearStart, String yearEnd) throws DataNotFoundException, BadRequestException, ServerErrorException {
         String baseUrl = "https://images-api.nasa.gov/search";
 

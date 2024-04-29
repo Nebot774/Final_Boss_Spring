@@ -13,7 +13,7 @@ class ImagenAstronomicaDelDiaServiceTest {
         NasaService nasaService = new NasaService();
 
         // Llamar al método obtenerAPOD con una fecha de entrada
-        ApodData result = nasaService.obtenerAPOD("2022-01-01");
+        ApodData result = nasaService.obtenerAPOD("2024-04-28");
 
         // Verificar que la respuesta es la esperada
         assertNotNull(result);

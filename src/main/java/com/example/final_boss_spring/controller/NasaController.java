@@ -17,7 +17,7 @@ import java.time.LocalDate;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/nasa")
+@RequestMapping("/nasa")
 public class NasaController {
 
     private final Logger logger = LoggerFactory.getLogger(NasaController.class);

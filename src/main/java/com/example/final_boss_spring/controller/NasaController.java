@@ -50,6 +50,24 @@ public class NasaController {
         }
     }
 
+    @GetMapping("/apod/{fecha}")
+    public ResponseEntity<?> obtenerImagenDelDia(@PathVariable String fecha) {
+        try {
+            logger.info("Iniciando la obtención de la imagen del día");
+
+            // Llamar al método obtenerAPOD() con la fecha proporcionada
+            ApodData apodData = nasaService.obtenerAPOD(fecha);
+
+            logger.info("Imagen del día obtenida con éxito");
+            // Devolver la respuesta con los datos obtenidos
+            return ResponseEntity.ok(apodData);
+        } catch (DataNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 
     // Método para obtener información sobre asteroides cercanos en un rango de fechas
     @GetMapping("/neows")

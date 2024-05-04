@@ -15,46 +15,47 @@ public class GalleryDataServiceTest {
 
     private NasaService nasaService = new NasaService();
 
-//    @Test
-//    public void testBuscarGaleria() {
-//        try {
-//            // Llamar al método buscarGaleria con parámetros de prueba
-//            GalleryData result = nasaService.buscarGaleria("apollo 11", "", "", "");
-//
-//            // Verificar que el resultado no es null
-//            assertNotNull(result);
-//
-//            // Verificar que la colección no es null
-//            assertNotNull(result.getCollection());
-//
-//            // Verificar que la lista de items no está vacía
-//            assertFalse(result.getCollection().getItems().isEmpty());
-//
-//            // Verificar que se reciben datos y mostrar en consola
-//            for (GalleryData.Item item : result.getCollection().getItems()) {
-//                for (GalleryData.ItemData data : item.getData()) {
-//                    System.out.println("Center: " + data.getCenter());
-//                    System.out.println("Date Created: " + data.getDateCreated());
-//                    System.out.println("Description: " + data.getDescription());
-//                    System.out.println("Media Type: " + data.getMediaType());
-//                    System.out.println("Nasa ID: " + data.getNasaId());
-//                    System.out.println("Title: " + data.getTitle());
-//                    if (data.getKeywords() != null) {
-//                        System.out.println("Keywords: " + String.join(", ", data.getKeywords()));
-//                    } else {
-//                        System.out.println("Keywords: null");
-//                    }
-//                    System.out.println("------------------------------------------------");
-//                }
-//            }
-//        } catch (BadRequestException e) {
-//            fail("La solicitud es incorrecta, a menudo debido a la falta de un parámetro requerido.");
-//        } catch (ServerErrorException e) {
-//            fail("Ocurrió un error en el servidor.");
-//        } catch (DataNotFoundException e) {
-//            fail("No se pudo obtener la información de la galería de la NASA.");
-//        }
-//    }
+    @Test
+    public void testBuscarGaleria() {
+        try {
+            // Llamar al método buscarGaleria con parámetros de prueba
+            GalleryData result = nasaService.buscarGaleria("moon", "image", "", "");
+
+            // Verificar que el resultado no es null
+            assertNotNull(result);
+
+            // Verificar que la colección no es null
+            assertNotNull(result.getCollection());
+
+            // Verificar que la lista de items no está vacía
+            assertFalse(result.getCollection().getItems().isEmpty());
+
+            // Verificar que se reciben datos y mostrar en consola
+            for (GalleryData.Item item : result.getCollection().getItems()) {
+                for (GalleryData.ItemData data : item.getData()) {
+                    System.out.println("Center: " + data.getCenter());
+                    System.out.println("Date Created: " + data.getDateCreated());
+                    System.out.println("Description: " + data.getDescription());
+                    System.out.println("Media Type: " + data.getMediaType());
+                    System.out.println("Nasa ID: " + data.getNasaId());
+                    System.out.println("Title: " + data.getTitle());
+                    if (data.getKeywords() != null) {
+                        System.out.println("Keywords: " + String.join(", ", data.getKeywords()));
+                    } else {
+                        System.out.println("Keywords: null");
+                    }
+                    System.out.println("Enlace de la imagen pequeña: " + item.getHref());
+                    System.out.println("------------------------------------------------");
+                }
+            }
+        } catch (BadRequestException e) {
+            fail("La solicitud es incorrecta, a menudo debido a la falta de un parámetro requerido.");
+        } catch (ServerErrorException e) {
+            fail("Ocurrió un error en el servidor.");
+        } catch (DataNotFoundException e) {
+            fail("No se pudo obtener la información de la galería de la NASA.");
+        }
+    }
 
  //   @Test
 //    public void testBuscarGaleriaQuery() {
@@ -97,42 +98,6 @@ public class GalleryDataServiceTest {
 //        }
 //    }
 
-    @Test
-    public void testBuscarGaleriaPorDefecto() {
-        try {
-            // Llamar al método buscarGaleriaPorDefecto
-            GalleryData result = nasaService.buscarGaleriaPorDefecto();
-
-            // Check if result or its properties are null or empty
-            assertNotNull(result, "Result is null");
-            assertNotNull(result.getCollection(), "Collection is null");
-            assertFalse(result.getCollection().getItems().isEmpty(), "Items list is empty");
-
-            // Verificar que se reciben datos y mostrar en consola
-            for (GalleryData.Item item : result.getCollection().getItems()) {
-                for (GalleryData.ItemData data : item.getData()) {
-                    System.out.println("Center: " + data.getCenter());
-                    System.out.println("Date Created: " + data.getDateCreated());
-                    System.out.println("Description: " + data.getDescription());
-                    System.out.println("Media Type: " + data.getMediaType());
-                    System.out.println("Nasa ID: " + data.getNasaId());
-                    System.out.println("Title: " + data.getTitle());
-                    if (data.getKeywords() != null) {
-                        System.out.println("Keywords: " + String.join(", ", data.getKeywords()));
-                    } else {
-                        System.out.println("Keywords: null");
-                    }
-
-                    // Verificar que el enlace de la imagen no es nulo y contiene "~small.jpg"
-                    assertNotNull(item.getHref(), "Image link is null");
-                    assertTrue(item.getHref().contains("~small.jpg"), "Image link does not contain '~small.jpg'");
-                    System.out.println("Enlace de la imagen pequeña: " + item.getHref());
-                }
-            }
-        } catch (DataNotFoundException e) {
-            fail("No se pudo obtener la información de la galería de la NASA.");
-        }
-    }
 //    @Test
 //    public void testBuscarGaleriaPorDefecto() {
 //        try {
@@ -140,36 +105,36 @@ public class GalleryDataServiceTest {
 //            GalleryData result = nasaService.buscarGaleriaPorDefecto();
 //
 //            // Check if result or its properties are null or empty
-//            if (result == null) {
-//                System.out.println("Result is null");
-//            } else if (result.getCollection() == null) {
-//                System.out.println("Collection is null");
-//            } else if (result.getCollection().getItems().isEmpty()) {
-//                System.out.println("Items list is empty");
-//            } else {
-//                // Verificar que se reciben datos y mostrar en consola
-//                for (GalleryData.Item item : result.getCollection().getItems()) {
-//                    for (GalleryData.ItemData data : item.getData()) {
-//                        System.out.println("Center: " + data.getCenter());
-//                        System.out.println("Date Created: " + data.getDateCreated());
-//                        System.out.println("Description: " + data.getDescription());
-//                        System.out.println("Media Type: " + data.getMediaType());
-//                        System.out.println("Nasa ID: " + data.getNasaId());
-//                        System.out.println("Title: " + data.getTitle());
-//                        if (data.getKeywords() != null) {
-//                            System.out.println("Keywords: " + String.join(", ", data.getKeywords()));
-//                        } else {
-//                            System.out.println("Keywords: null");
-//                        }
-//                        System.out.println("Enlace de la imagen: " + item.getHref()); // Línea agregada para imprimir el enlace de la imagen
-//                        System.out.println("------------------------------------------------");
+//            assertNotNull(result, "Result is null");
+//            assertNotNull(result.getCollection(), "Collection is null");
+//            assertFalse(result.getCollection().getItems().isEmpty(), "Items list is empty");
+//
+//            // Verificar que se reciben datos y mostrar en consola
+//            for (GalleryData.Item item : result.getCollection().getItems()) {
+//                for (GalleryData.ItemData data : item.getData()) {
+//                    System.out.println("Center: " + data.getCenter());
+//                    System.out.println("Date Created: " + data.getDateCreated());
+//                    System.out.println("Description: " + data.getDescription());
+//                    System.out.println("Media Type: " + data.getMediaType());
+//                    System.out.println("Nasa ID: " + data.getNasaId());
+//                    System.out.println("Title: " + data.getTitle());
+//                    if (data.getKeywords() != null) {
+//                        System.out.println("Keywords: " + String.join(", ", data.getKeywords()));
+//                    } else {
+//                        System.out.println("Keywords: null");
 //                    }
+//
+//                    // Verificar que el enlace de la imagen no es nulo y contiene "~small.jpg"
+//                    assertNotNull(item.getHref(), "Image link is null");
+//                    assertTrue(item.getHref().contains("~small.jpg"), "Image link does not contain '~small.jpg'");
+//                    System.out.println("Enlace de la imagen pequeña: " + item.getHref());
 //                }
 //            }
 //        } catch (DataNotFoundException e) {
 //            fail("No se pudo obtener la información de la galería de la NASA.");
 //        }
 //    }
+
 
 //    @Test
 //    public void testBuscarGaleriaBadRequest() {

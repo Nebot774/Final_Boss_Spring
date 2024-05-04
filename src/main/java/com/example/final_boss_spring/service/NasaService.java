@@ -16,7 +16,11 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 @Service
 public class NasaService {
@@ -218,6 +222,7 @@ public class NasaService {
         }
     }
 
+
     public GalleryData buscarGaleriaPorDefecto() throws DataNotFoundException {
         // URL base de la galería de imágenes de la NASA
         String urlString = "https://images-api.nasa.gov/search?media_type=image";
@@ -238,10 +243,53 @@ public class NasaService {
 
                 scanner.close();
                 connection.disconnect();
-
                 // Convertir la respuesta JSON en un objeto GalleryData utilizando ObjectMapper
                 ObjectMapper objectMapper = new ObjectMapper();
-                return objectMapper.readValue(response.toString(), GalleryData.class);
+                GalleryData result = objectMapper.readValue(response.toString(), GalleryData.class);
+
+                for (GalleryData.Item item : result.getCollection().getItems()) {
+                    for (GalleryData.ItemData data : item.getData()) {
+                        System.out.println("Center: " + data.getCenter());
+                        System.out.println("Date Created: " + data.getDateCreated());
+                        System.out.println("Description: " + data.getDescription());
+                        System.out.println("Media Type: " + data.getMediaType());
+                        System.out.println("Nasa ID: " + data.getNasaId());
+                        System.out.println("Title: " + data.getTitle());
+                        if (data.getKeywords() != null) {
+                            System.out.println("Keywords: " + String.join(", ", data.getKeywords()));
+                        } else {
+                            System.out.println("Keywords: null");
+                        }
+
+                        String href = item.getHref();
+                        URL url2 = new URL(href);
+                        HttpURLConnection connection2 = (HttpURLConnection) url2.openConnection();
+                        connection2.setRequestMethod("GET");
+                        Scanner scanner2 = new Scanner(connection2.getInputStream());
+                        StringBuilder response2 = new StringBuilder();
+                        while (scanner2.hasNextLine()) {
+                            response2.append(scanner2.nextLine());
+                        }
+                        scanner2.close();
+
+                        List<String> imageLinks = objectMapper.readValue(response2.toString(), new TypeReference<List<String>>(){});
+
+                        String smallImageLink = null;
+                        for (String link : imageLinks) {
+                            if (link.contains("~small.jpg")) {
+                                smallImageLink = link;
+                                break;
+                            }
+                        }
+
+                        if (smallImageLink != null) {
+                            System.out.println("Enlace de la imagen pequeña: " + smallImageLink);
+                        } else {
+                            System.out.println("No se encontró la imagen pequeña.");
+                        }
+                    }
+                }
+                return result;
             } else {
                 throw new DataNotFoundException("No se pudo obtener la galería por defecto. Código de respuesta: " + responseCode);
             }
@@ -249,6 +297,39 @@ public class NasaService {
             throw new DataNotFoundException("Error al comunicarse con la API de la NASA: " + e.getMessage());
         }
     }
+
+
+//    public GalleryData buscarGaleriaPorDefecto() throws DataNotFoundException {
+//        // URL base de la galería de imágenes de la NASA
+//        String urlString = "https://images-api.nasa.gov/search?media_type=image";
+//
+//        try {
+//            URL url = new URL(urlString);
+//            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//            connection.setRequestMethod("GET");
+//
+//            int responseCode = connection.getResponseCode();
+//            if (responseCode == HttpURLConnection.HTTP_OK) {
+//                Scanner scanner = new Scanner(connection.getInputStream());
+//                StringBuilder response = new StringBuilder();
+//
+//                while (scanner.hasNextLine()) {
+//                    response.append(scanner.nextLine());
+//                }
+//
+//                scanner.close();
+//                connection.disconnect();
+//
+//                // Convertir la respuesta JSON en un objeto GalleryData utilizando ObjectMapper
+//                ObjectMapper objectMapper = new ObjectMapper();
+//                return objectMapper.readValue(response.toString(), GalleryData.class);
+//            } else {
+//                throw new DataNotFoundException("No se pudo obtener la galería por defecto. Código de respuesta: " + responseCode);
+//            }
+//        } catch (IOException e) {
+//            throw new DataNotFoundException("Error al comunicarse con la API de la NASA: " + e.getMessage());
+//        }
+//    }
 
 
 

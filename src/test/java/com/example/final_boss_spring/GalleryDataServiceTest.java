@@ -56,20 +56,57 @@ public class GalleryDataServiceTest {
 //        }
 //    }
 
+ //   @Test
+//    public void testBuscarGaleriaQuery() {
+//        try {
+//            // Llamar al método buscarGaleriaQuery con parámetros de prueba
+//            GalleryData result = nasaService.buscarGaleriaQuery("apollo 11");
+//
+//            // Verificar que el resultado no es null
+//            assertNotNull(result);
+//
+//            // Verificar que la colección no es null
+//            assertNotNull(result.getCollection());
+//
+//            // Verificar que la lista de items no está vacía
+//            assertFalse(result.getCollection().getItems().isEmpty());
+//
+//            // Verificar que se reciben datos y mostrar en consola
+//            for (GalleryData.Item item : result.getCollection().getItems()) {
+//                for (GalleryData.ItemData data : item.getData()) {
+//                    System.out.println("Center: " + data.getCenter());
+//                    System.out.println("Date Created: " + data.getDateCreated());
+//                    System.out.println("Description: " + data.getDescription());
+//                    System.out.println("Media Type: " + data.getMediaType());
+//                    System.out.println("Nasa ID: " + data.getNasaId());
+//                    System.out.println("Title: " + data.getTitle());
+//                    if (data.getKeywords() != null) {
+//                        System.out.println("Keywords: " + String.join(", ", data.getKeywords()));
+//                    } else {
+//                        System.out.println("Keywords: null");
+//                    }
+//                    System.out.println("------------------------------------------------");
+//                }
+//            }
+//        } catch (BadRequestException e) {
+//            fail("La solicitud es incorrecta, a menudo debido a la falta de un parámetro requerido.");
+//        } catch (ServerErrorException e) {
+//            fail("Ocurrió un error en el servidor.");
+//        } catch (DataNotFoundException e) {
+//            fail("No se pudo obtener la información de la galería de la NASA.");
+//        }
+//    }
+
     @Test
-    public void testBuscarGaleriaQuery() {
+    public void testBuscarGaleriaPorDefecto() {
         try {
-            // Llamar al método buscarGaleriaQuery con parámetros de prueba
-            GalleryData result = nasaService.buscarGaleriaQuery("apollo 11");
+            // Llamar al método buscarGaleriaPorDefecto
+            GalleryData result = nasaService.buscarGaleriaPorDefecto();
 
-            // Verificar que el resultado no es null
-            assertNotNull(result);
-
-            // Verificar que la colección no es null
-            assertNotNull(result.getCollection());
-
-            // Verificar que la lista de items no está vacía
-            assertFalse(result.getCollection().getItems().isEmpty());
+            // Check if result or its properties are null or empty
+            assertNotNull(result, "Result is null");
+            assertNotNull(result.getCollection(), "Collection is null");
+            assertFalse(result.getCollection().getItems().isEmpty(), "Items list is empty");
 
             // Verificar que se reciben datos y mostrar en consola
             for (GalleryData.Item item : result.getCollection().getItems()) {
@@ -85,18 +122,17 @@ public class GalleryDataServiceTest {
                     } else {
                         System.out.println("Keywords: null");
                     }
-                    System.out.println("------------------------------------------------");
+
+                    // Verificar que el enlace de la imagen no es nulo y contiene "~small.jpg"
+                    assertNotNull(item.getHref(), "Image link is null");
+                    assertTrue(item.getHref().contains("~small.jpg"), "Image link does not contain '~small.jpg'");
+                    System.out.println("Enlace de la imagen pequeña: " + item.getHref());
                 }
             }
-        } catch (BadRequestException e) {
-            fail("La solicitud es incorrecta, a menudo debido a la falta de un parámetro requerido.");
-        } catch (ServerErrorException e) {
-            fail("Ocurrió un error en el servidor.");
         } catch (DataNotFoundException e) {
             fail("No se pudo obtener la información de la galería de la NASA.");
         }
     }
-
 //    @Test
 //    public void testBuscarGaleriaPorDefecto() {
 //        try {
@@ -125,6 +161,7 @@ public class GalleryDataServiceTest {
 //                        } else {
 //                            System.out.println("Keywords: null");
 //                        }
+//                        System.out.println("Enlace de la imagen: " + item.getHref()); // Línea agregada para imprimir el enlace de la imagen
 //                        System.out.println("------------------------------------------------");
 //                    }
 //                }

@@ -94,10 +94,10 @@ public class NasaController {
     }
 
     // Método para buscar en la galería de imágenes y vídeos
-    @GetMapping("/image-gallery")
-    public ResponseEntity<?> buscarEnGaleria(@RequestParam String query, @RequestParam(required = false) String mediaType, @RequestParam(required = false) String yearStart, @RequestParam(required = false) String yearEnd) {
+    @GetMapping("/galeriadefecto")
+    public ResponseEntity<?> buscarEnGaleria(@RequestParam String query, @RequestParam(required = false) String mediaType, @RequestParam(required = false) String yearStart, @RequestParam(required = false) String yearEnd, @RequestParam(required = false, defaultValue = "25") int numResults) {
         try {
-            return ResponseEntity.ok().body(nasaService.buscarGaleria(query, mediaType, yearStart, yearEnd));
+            return ResponseEntity.ok().body(nasaService.buscarGaleria(query, mediaType, yearStart, yearEnd, numResults));
         } catch (BadRequestException e) {
             return ResponseEntity.badRequest().body("La solicitud es incorrecta, a menudo debido a la falta de un parámetro requerido.");
         } catch (DataNotFoundException e) {
@@ -109,6 +109,25 @@ public class NasaController {
         }
     }
 
+    @GetMapping("/galeria")
+    public ResponseEntity<?> buscarGaleria(
+            @RequestParam String query,
+            @RequestParam(required = false) String mediaType,
+            @RequestParam(required = false) String yearStart,
+            @RequestParam(required = false) String yearEnd,
+            @RequestParam(required = false, defaultValue = "25") int numResults) {
+        try {
+            return ResponseEntity.ok().body(nasaService.buscarGaleria(query, mediaType, yearStart, yearEnd, numResults));
+        } catch (BadRequestException e) {
+            return ResponseEntity.badRequest().body("La solicitud es incorrecta, a menudo debido a la falta de un parámetro requerido.");
+        } catch (DataNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (ServerErrorException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocurrió un error en el servidor.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
 
 

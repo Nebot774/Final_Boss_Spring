@@ -19,7 +19,7 @@ public class GalleryDataServiceTest {
     public void testBuscarGaleria() {
         try {
             // Llamar al método buscarGaleria con parámetros de prueba
-            GalleryData result = nasaService.buscarGaleria("moon", "image", "", "");
+            GalleryData result = nasaService.buscarGaleria("moon", "image", "", "",20);
 
             // Verificar que el resultado no es null
             assertNotNull(result);
@@ -32,6 +32,8 @@ public class GalleryDataServiceTest {
 
             // Verificar que se reciben datos y mostrar en consola
             for (GalleryData.Item item : result.getCollection().getItems()) {
+
+
                 for (GalleryData.ItemData data : item.getData()) {
                     System.out.println("Center: " + data.getCenter());
                     System.out.println("Date Created: " + data.getDateCreated());

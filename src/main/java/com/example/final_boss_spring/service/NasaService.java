@@ -355,7 +355,7 @@ public class NasaService {
 
                         if (smallImageLink != null) {
                             System.out.println("Enlace de la imagen pequeña: " + smallImageLink);
-                            //data.setSmallImageUrl(smallImageLink); // Añade esta línea
+                            data.setSmallImageUrl(smallImageLink); // Añade esta línea
                         } else {
                             System.out.println("No se encontró la imagen pequeña.");
                         }

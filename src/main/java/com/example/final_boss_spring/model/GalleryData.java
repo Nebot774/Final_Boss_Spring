@@ -40,6 +40,7 @@ public class GalleryData {
         private String mediaType;
         private String nasaId;
         private String title;
+        private String smallImageUrl; // New field
     }
 
     @Data

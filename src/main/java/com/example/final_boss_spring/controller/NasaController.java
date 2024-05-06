@@ -95,19 +95,16 @@ public class NasaController {
 
     // Método para buscar en la galería de imágenes y vídeos
     @GetMapping("/galeriadefecto")
-    public ResponseEntity<?> buscarEnGaleria(@RequestParam String query, @RequestParam(required = false) String mediaType, @RequestParam(required = false) String yearStart, @RequestParam(required = false) String yearEnd, @RequestParam(required = false, defaultValue = "25") int numResults) {
+    public ResponseEntity<?> buscarGaleriaPorDefecto() {
         try {
-            return ResponseEntity.ok().body(nasaService.buscarGaleria(query, mediaType, yearStart, yearEnd, numResults));
-        } catch (BadRequestException e) {
-            return ResponseEntity.badRequest().body("La solicitud es incorrecta, a menudo debido a la falta de un parámetro requerido.");
+            return ResponseEntity.ok().body(nasaService.buscarGaleriaPorDefecto());
         } catch (DataNotFoundException e) {
             return ResponseEntity.notFound().build();
-        } catch (ServerErrorException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocurrió un error en el servidor.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
 
     @GetMapping("/galeria")
     public ResponseEntity<?> buscarGaleria(

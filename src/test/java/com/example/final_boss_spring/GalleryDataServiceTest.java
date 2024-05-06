@@ -19,7 +19,7 @@ public class GalleryDataServiceTest {
     public void testBuscarGaleria() {
         try {
             // Llamar al método buscarGaleria con parámetros de prueba
-            GalleryData result = nasaService.buscarGaleria("moon", "image", "", "",20);
+            GalleryData result = nasaService.buscarGaleria("moon", "image", "", "",1);
 
             // Verificar que el resultado no es null
             assertNotNull(result);

@@ -37,6 +37,7 @@ public class NeoWsData {
      * Representa un objeto cercano a la Tierra, encapsulando todos los datos específicos de un asteroide.
      */
     @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class NearEarthObject {
         private Links links;
         private String id;

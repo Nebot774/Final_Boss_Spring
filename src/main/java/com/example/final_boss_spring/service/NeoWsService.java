@@ -2,6 +2,7 @@ package com.example.final_boss_spring.service;
 
 import com.example.final_boss_spring.exception.DataNotFoundException;
 import com.example.final_boss_spring.model.NeoWsData;
+import com.example.final_boss_spring.model.NeoWsNeoData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import com.example.final_boss_spring.config.NasaApiConfig;
@@ -51,7 +52,7 @@ public class NeoWsService {
         }
     }
 
-    public NeoWsData obtenerNeoWsPorId(String asteroideId) throws DataNotFoundException {
+    public NeoWsNeoData obtenerNeoWsPorId(String asteroideId) throws DataNotFoundException {
         try {
             // Construir la URL con el ID del asteroide
             String urlString = "https://api.nasa.gov/neo/rest/v1/neo/" + asteroideId + "?api_key=" + API_KEY;
@@ -71,11 +72,11 @@ public class NeoWsService {
             }
             scanner.close();
 
-            // Analizar la respuesta JSON y convertirla en un objeto NeoWsData
+            // Analizar la respuesta JSON y convertirla en un objeto NeoWsNeoData
             ObjectMapper objectMapper = new ObjectMapper();
-            NeoWsData neoWsData = objectMapper.readValue(response.toString(), NeoWsData.class);
+            NeoWsNeoData neoWsData = objectMapper.readValue(response.toString(), NeoWsNeoData.class);
 
-            // Retornar el objeto NeoWsData
+            // Retornar el objeto NeoWsNeoData
             return neoWsData;
 
         } catch (IOException e) {

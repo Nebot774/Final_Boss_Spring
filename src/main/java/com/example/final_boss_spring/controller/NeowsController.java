@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/nasa/neows")
+@RequestMapping("/nasa")
 public class NeowsController {
     private final NeoWsService neoWsService;
     private final Logger logger = LoggerFactory.getLogger(NeowsController.class);

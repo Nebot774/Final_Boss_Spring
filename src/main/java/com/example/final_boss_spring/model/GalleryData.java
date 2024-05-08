@@ -25,14 +25,15 @@ public class GalleryData {
     @NoArgsConstructor
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Item {
-        private List<ItemData> data; // Changed Data to ItemData
+        private List<ItemData> data;
         private String href;
+        private List<String> imageLinks; // New field for image links
     }
 
     @Data
     @NoArgsConstructor
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class ItemData { // Changed Data to ItemData
+    public static class ItemData {
         private String center;
         private String dateCreated;
         private String description;
@@ -40,7 +41,6 @@ public class GalleryData {
         private String mediaType;
         private String nasaId;
         private String title;
-        private String smallImageUrl; // New field
     }
 
     @Data

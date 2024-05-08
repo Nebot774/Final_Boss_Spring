@@ -1,7 +1,6 @@
 package com.example.final_boss_spring;
 
 import com.example.final_boss_spring.model.ApodData;
-import com.example.final_boss_spring.service.NasaService;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,7 +9,7 @@ class ImagenAstronomicaDelDiaServiceTest {
     @Test
     void obtenerAPODTest() {
         // Crear una instancia del servicio
-        NasaService nasaService = new NasaService();
+        olala nasaService = new olala();
 
         // Llamar al método obtenerAPOD con una fecha de entrada
         ApodData result = nasaService.obtenerAPOD("2024-04-28");

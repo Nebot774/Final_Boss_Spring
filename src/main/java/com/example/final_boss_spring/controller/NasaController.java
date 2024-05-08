@@ -2,9 +2,10 @@ package com.example.final_boss_spring.controller;
 
 import com.example.final_boss_spring.exception.DataNotFoundException;
 import com.example.final_boss_spring.model.ApodData;
-import com.example.final_boss_spring.service.NasaService;
+import com.example.final_boss_spring.service.ApodService;
+import com.example.final_boss_spring.service.GalleryService;
+import com.example.final_boss_spring.service.NeoWsService;
 import org.apache.coyote.BadRequestException;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,13 +22,19 @@ import java.time.LocalDate;
 public class NasaController {
 
     private final Logger logger = LoggerFactory.getLogger(NasaController.class);
-    // Servicio inyectado para manejar la lógica de negocio
-    private final NasaService nasaService;
+
+    // Servicios inyectados para manejar la lógica de negocio
+    private final ApodService apodService;
+    private final GalleryService galleryService;
+    private final NeoWsService neoWsService;
+
+    public NasaController(ApodService apodService, GalleryService galleryService, NeoWsService neoWsService) {
+        this.apodService = apodService;
+        this.galleryService = galleryService;
+        this.neoWsService = neoWsService;
+    }
 
     // Constructor con inyección de dependencias
-    public NasaController(NasaService nasaService) {
-        this.nasaService = nasaService;
-    }
 
     // Endpoint para obtener la Imagen del Día (APOD)
     @GetMapping("/apod")
@@ -38,7 +45,7 @@ public class NasaController {
             String fechaActual = LocalDate.now().toString();
 
             // Llamar al método obtenerAPOD() con la fecha actual
-            ApodData apodData = nasaService.obtenerAPOD(fechaActual);
+            ApodData apodData = apodService.obtenerAPOD(fechaActual);
 
             logger.info("Imagen del día obtenida con éxito");
             // Devolver la respuesta con los datos obtenidos
@@ -56,7 +63,7 @@ public class NasaController {
             logger.info("Iniciando la obtención de la imagen del día");
 
             // Llamar al método obtenerAPOD() con la fecha proporcionada
-            ApodData apodData = nasaService.obtenerAPOD(fecha);
+            ApodData apodData = apodService.obtenerAPOD(fecha);
 
             logger.info("Imagen del día obtenida con éxito");
             // Devolver la respuesta con los datos obtenidos
@@ -73,7 +80,7 @@ public class NasaController {
     @GetMapping("/neows")
     public ResponseEntity<?> obtenerAsteroidesCercanos(@RequestParam String startDate, @RequestParam String endDate) {
         try {
-            return ResponseEntity.ok().body(nasaService.obtenerNeoWsPorFecha(startDate, endDate));
+            return ResponseEntity.ok().body(neoWsService.obtenerNeoWsPorFecha(startDate, endDate));
         } catch (DataNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
@@ -85,7 +92,7 @@ public class NasaController {
     @GetMapping("/neows/{asteroideId}")
     public ResponseEntity<?> obtenerAsteroidePorId(@PathVariable String asteroideId) {
         try {
-            return ResponseEntity.ok().body(nasaService.obtenerNeoWsPorId(asteroideId));
+            return ResponseEntity.ok().body(neoWsService.obtenerNeoWsPorId(asteroideId));
         } catch (DataNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
@@ -97,7 +104,7 @@ public class NasaController {
     @GetMapping("/galeriadefecto")
     public ResponseEntity<?> buscarGaleriaPorDefecto() {
         try {
-            return ResponseEntity.ok().body(nasaService.buscarGaleriaPorDefecto());
+            return ResponseEntity.ok().body(galleryService.buscarGaleriaPorDefecto());
         } catch (DataNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
@@ -114,7 +121,7 @@ public class NasaController {
             @RequestParam(required = false) String yearEnd,
             @RequestParam(required = false, defaultValue = "25") int numResults) {
         try {
-            return ResponseEntity.ok().body(nasaService.buscarGaleria(query, mediaType, yearStart, yearEnd, numResults));
+            return ResponseEntity.ok().body(galleryService.buscarGaleria(query, mediaType, yearStart, yearEnd, numResults));
         } catch (BadRequestException e) {
             return ResponseEntity.badRequest().body("La solicitud es incorrecta, a menudo debido a la falta de un parámetro requerido.");
         } catch (DataNotFoundException e) {

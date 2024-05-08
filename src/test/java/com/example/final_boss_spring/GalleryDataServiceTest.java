@@ -2,15 +2,17 @@ package com.example.final_boss_spring;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.example.final_boss_spring.controller.GalleryController;
 import com.example.final_boss_spring.exception.DataNotFoundException;
 import com.example.final_boss_spring.model.GalleryData;
+import com.example.final_boss_spring.service.GalleryService;
 import org.apache.coyote.BadRequestException;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.server.ServerErrorException;
 
 public class GalleryDataServiceTest {
 
-    private olala nasaService = new olala();
+    private GalleryService nasaService = new GalleryService();
 
     @Test
     public void testBuscarGaleria() {

@@ -12,7 +12,7 @@ import org.springframework.web.server.ServerErrorException;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/nasa/gallery")
+@RequestMapping("/nasa")
 public class GalleryController {
     private final GalleryService galleryService;
     private final Logger logger = LoggerFactory.getLogger(GalleryController.class);

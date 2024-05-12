@@ -11,7 +11,7 @@ public class AsteroidesCercanosServiceTest {
     @Test
     public void obtenerNeoWsPorFechaTest() {
         NeoWsService nasaService = new NeoWsService();
-        NeoWsData result = nasaService.obtenerNeoWsPorFecha("2022-01-01", "2022-01-02");
+        NeoWsData result = nasaService.obtenerNeoWsPorFecha("2024-05-01", "2024-05-08");
         assertNotNull(result);
         System.out.println(result.toString());
     }

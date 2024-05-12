@@ -34,7 +34,7 @@ public class NeowsController {
     }
 
     // Método para obtener información sobre un asteroide específico por su ID
-    @GetMapping("/neows/{asteroideId}")
+    @GetMapping("/neowsid/{asteroideId}")
     public ResponseEntity<?> obtenerAsteroidePorId(@PathVariable String asteroideId) {
         try {
             return ResponseEntity.ok().body(neoWsService.obtenerNeoWsPorId(asteroideId));

@@ -1,6 +1,7 @@
 package com.example.final_boss_spring.controller;
 
 import com.example.final_boss_spring.model.MarsRover;
+import com.example.final_boss_spring.model.MissionManifest;
 import com.example.final_boss_spring.service.MarsRoverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,5 +20,10 @@ public class MarsRoverController {
                                                              @RequestParam String date,
                                                              @RequestParam String camera) {
         return marsRoverService.getMarsRoverPhotos(rover, date, camera);
+    }
+
+    @GetMapping("/mars-rover/manifest")
+    public MissionManifest.PhotoManifest getMissionManifest(@RequestParam String rover) {
+        return marsRoverService.getMissionManifest(rover);
     }
 }

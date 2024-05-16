@@ -10,34 +10,34 @@ import com.example.final_boss_spring.model.MissionManifest;
 import org.junit.jupiter.api.Test;
 
 public class MarsRoverServiceTest {
-//
-//    @Test
-//    void getMarsRoverPhotosTest() {
-//        // Crear una instancia de RestTemplate
-//        RestTemplate restTemplate = new RestTemplate();
-//
-//        // Crear una instancia del servicio con RestTemplate
-//        MarsRoverService marsRoverService = new MarsRoverService(restTemplate);
-//
-//        // Llamar al método getMarsRoverPhotos con los parámetros de entrada
-//        List<MarsRover.MarsRoverPhoto> result = marsRoverService.getMarsRoverPhotos("curiosity", "2022-01-01", "fhaz");
-//
-//        // Verificar que la respuesta es la esperada
-//        assertNotNull(result);
-//
-//        // Imprimir los campos del objeto MarsRoverPhoto
-//        result.forEach(photo -> {
-//            System.out.println("ID: " + photo.getId());
-//            System.out.println("Sol: " + photo.getSol());
-//            System.out.println("Camera: " + (photo.getCamera() != null ? photo.getCamera().getFullName() : "null"));
-//            System.out.println("Image Source: " + photo.getImgSrc());
-//            System.out.println("Earth Date: " + photo.getEarthDate());
-//            System.out.println("Rover Name: " + photo.getRover().getName());
-//            System.out.println("Landing Date: " + photo.getRover().getLandingDate());
-//            System.out.println("Launch Date: " + photo.getRover().getLaunchDate());
-//            System.out.println("Status: " + photo.getRover().getStatus());
-//        });
-//    }
+
+    @Test
+    void getMarsRoverPhotosTest() {
+        // Crear una instancia de RestTemplate
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Crear una instancia del servicio con RestTemplate
+        MarsRoverService marsRoverService = new MarsRoverService(restTemplate);
+
+        // Llamar al método getMarsRoverPhotos con los parámetros de entrada
+        List<MarsRover.MarsRoverPhoto> result = marsRoverService.getMarsRoverPhotos("curiosity", "2022-01-01", "fhaz");
+
+        // Verificar que la respuesta es la esperada
+        assertNotNull(result);
+
+        // Imprimir los campos del objeto MarsRoverPhoto
+        result.forEach(photo -> {
+            System.out.println("ID: " + photo.getId());
+            System.out.println("Sol: " + photo.getSol());
+            System.out.println("Camera: " + (photo.getCamera() != null ? photo.getCamera().getFullName() : "null"));
+            System.out.println("Image Source: " + photo.getImgSrc());
+            System.out.println("Earth Date: " + photo.getEarthDate());
+            System.out.println("Rover Name: " + photo.getRover().getName());
+            System.out.println("Landing Date: " + photo.getRover().getLandingDate());
+            System.out.println("Launch Date: " + photo.getRover().getLaunchDate());
+            System.out.println("Status: " + photo.getRover().getStatus());
+        });
+    }
 
     @Test
     void getCuriosityMissionManifestTest() {

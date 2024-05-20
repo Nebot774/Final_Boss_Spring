@@ -20,7 +20,7 @@ public class MarsRoverServiceTest {
         MarsRoverService marsRoverService = new MarsRoverService(restTemplate);
 
         // Llamar al método getMarsRoverPhotos con los parámetros de entrada
-        List<MarsRover.MarsRoverPhoto> result = marsRoverService.getMarsRoverPhotos("curiosity", "2022-01-01", "fhaz");
+        List<MarsRover.MarsRoverPhoto> result = marsRoverService.getMarsRoverPhotos("curiosity", "2014-05-21", "fhaz");
 
         // Verificar que la respuesta es la esperada
         assertNotNull(result);

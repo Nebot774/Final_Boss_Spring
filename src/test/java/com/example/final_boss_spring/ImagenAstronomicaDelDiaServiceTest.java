@@ -27,6 +27,6 @@ class ImagenAstronomicaDelDiaServiceTest {
         System.out.println("Url: " + result.getUrl());
         System.out.println("Copyright: " + result.getCopyright());
 
-        // Aquí puedes agregar más aserciones para verificar los campos específicos de ApodData
+
     }
 }

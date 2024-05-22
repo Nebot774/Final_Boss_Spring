@@ -17,6 +17,7 @@ public class TierraDesdeEspacioService {
 
     public TierraDesdeEspacio fetchTierraDesdeEspacio(double lat, double lon, String date) {
         String url = String.format("https://api.nasa.gov/planetary/earth/assets?lon=%s&lat=%s&date=%s&api_key=%s", lon, lat, date, API_KEY);
+        System.out.println(url); // Imprimir la URL por consola
         return restTemplate.getForObject(url, TierraDesdeEspacio.class);
     }
 }

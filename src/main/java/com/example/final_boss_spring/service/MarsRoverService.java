@@ -16,11 +16,14 @@ public class MarsRoverService {
 
     private final RestTemplate restTemplate;
 
+    // Constructor para inyectar RestTemplate
     public MarsRoverService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
+    // Método para obtener fotos del rover de Marte
     public List<MarsRover.MarsRoverPhoto> getMarsRoverPhotos(String rover, String earthDate, String camera) {
+        // Construcción de la URL usando UriComponentsBuilder
         String url = UriComponentsBuilder.fromHttpUrl(BASE_URL)
                 .pathSegment("rovers", rover, "photos")
                 .queryParam("earth_date", earthDate)
@@ -28,22 +31,33 @@ public class MarsRoverService {
                 .queryParam("api_key", API_KEY)
                 .toUriString();
 
+        // Llamada a la API de la NASA y mapeo de la respuesta al objeto MarsRover
         MarsRover response = restTemplate.getForObject(url, MarsRover.class);
+
+        // Devolver la lista de fotos, o null si la respuesta es null
         return response != null ? response.getPhotos() : null;
     }
 
+    // Método para obtener el manifiesto de la misión del rover
     public MissionManifest.PhotoManifest getMissionManifest(String rover) {
+        // Construcción de la URL usando UriComponentsBuilder
         String url = UriComponentsBuilder.fromHttpUrl(BASE_URL)
                 .pathSegment("manifests", rover)
                 .queryParam("api_key", API_KEY)
                 .toUriString();
 
+        // Imprimir la URL construida para depuración
         System.out.println("Constructed URL: " + url);
 
+        // Llamada a la API de la NASA y mapeo de la respuesta al objeto MissionManifest
         MissionManifest response = restTemplate.getForObject(url, MissionManifest.class);
+
+        // Imprimir la respuesta mapeada para depuración
         System.out.println("Mapped Response: " + response);
 
+        // Devolver el manifiesto de fotos, o null si la respuesta es null
         return response != null ? response.getPhotoManifest() : null;
     }
 }
+
 

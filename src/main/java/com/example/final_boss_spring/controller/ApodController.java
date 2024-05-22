@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
+// Controlador para las operaciones relacionadas con APOD (Astronomy Picture of the Day)
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/nasa")
@@ -18,11 +19,10 @@ public class ApodController {
     private final ApodService apodService;
     private final Logger logger = LoggerFactory.getLogger(ApodController.class);
 
+    // Inyección de dependencias del servicio ApodService
     public ApodController(ApodService apodService) {
         this.apodService = apodService;
     }
-
-    // Métodos relacionados con APOD
 
     // Endpoint para obtener la Imagen del Día (APOD)
     @GetMapping("/apod")
@@ -45,6 +45,7 @@ public class ApodController {
         }
     }
 
+    // Endpoint para obtener la Imagen del Día (APOD) de una fecha específica
     @GetMapping("/apod/{fecha}")
     public ResponseEntity<?> obtenerImagenDelDia(@PathVariable String fecha) {
         try {

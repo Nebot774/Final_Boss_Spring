@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
+//Esta clase representa un objeto de tipo GalleryData,
 @Data
 @NoArgsConstructor // Generates a no-args constructor
 @JsonIgnoreProperties(ignoreUnknown = true)

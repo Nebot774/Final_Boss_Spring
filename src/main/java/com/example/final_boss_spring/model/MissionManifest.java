@@ -15,9 +15,15 @@ import java.util.List;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MissionManifest {
+    /**
+     *Clase PhotoManifest que contiene la información del manifiesto de fotos de la misión
+     */
     @JsonProperty("photo_manifest")
     private PhotoManifest photoManifest;
 
+    /**
+     * Clase PhotoManifest que contiene la información detallada del manifiesto de fotos de la misión
+     */
     @Data
     @NoArgsConstructor
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -36,6 +42,9 @@ public class MissionManifest {
         private Integer totalPhotos;
         private List<SolInfo> photos;
 
+        /**
+         *Clase SolInfo que contiene la información detallada de cada sol (día marciano) de la misión
+         */
         @Data
         @NoArgsConstructor
         @JsonIgnoreProperties(ignoreUnknown = true)

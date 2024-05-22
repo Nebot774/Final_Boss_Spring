@@ -15,6 +15,10 @@ import java.util.List;
 public class MarsRover {
     private List<MarsRoverPhoto> photos;
 
+
+    /**
+     * Representa una foto individual tomada por el Mars Rover, encapsulando todos los datos específicos de una foto.
+     */
     @Data
     @NoArgsConstructor
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -31,12 +35,16 @@ public class MarsRover {
 
         private Rover rover;
 
-        // El nombre de la propiedad debe coincidir con el campo en JSON
+
         public void setImgSrc(String imgSrc) {
             this.imgSrc = imgSrc;
         }
     }
 
+
+    /**
+     * Representa la cámara que tomó una foto, encapsulando todos los datos específicos de una cámara.
+     */
     @Data
     @NoArgsConstructor
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -51,6 +59,10 @@ public class MarsRover {
         private String fullName;
     }
 
+
+    /**
+     * Representa el rover que tomó una foto, encapsulando todos los datos específicos de un rover.
+     */
     @Data
     @NoArgsConstructor
     @JsonIgnoreProperties(ignoreUnknown = true)

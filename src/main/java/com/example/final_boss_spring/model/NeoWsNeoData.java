@@ -6,9 +6,13 @@ import lombok.Data;
 
 import java.util.List;
 
+
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NeoWsNeoData {
+    /**
+     *Clases y atributos relacionados con la información general del objeto NEO (Near Earth Object)
+     */
     private Links links;
     private String id;
     private String neo_reference_id;
@@ -21,12 +25,18 @@ public class NeoWsNeoData {
     private List<CloseApproachData> close_approach_data;
     private boolean is_sentry_object;
 
+    /**
+     *Clase Links que contiene el enlace a la información del objeto NEO
+     */
     @Data
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Links {
         private String self;
     }
 
+    /**
+     *Clase EstimatedDiameter que contiene la información del diámetro estimado del objeto NEO en diferentes unidades de medida
+     */
     @Data
     public static class EstimatedDiameter {
         private Diameter kilometers;
@@ -34,6 +44,9 @@ public class NeoWsNeoData {
         private Diameter miles;
         private Diameter feet;
 
+        /**
+         *Clase Diameter que contiene el diámetro mínimo y máximo estimado
+         */
         @Data
         public static class Diameter {
             private double estimated_diameter_min;
@@ -41,6 +54,9 @@ public class NeoWsNeoData {
         }
     }
 
+    /**
+     *Clase CloseApproachData que contiene la información de los acercamientos cercanos del objeto NEO
+     */
     @Data
     public static class CloseApproachData {
         private String close_approach_date;
@@ -50,6 +66,9 @@ public class NeoWsNeoData {
         private MissDistance miss_distance;
         private String orbiting_body;
 
+        /**
+         *Clase RelativeVelocity que contiene la velocidad relativa del objeto NEO en diferentes unidades de medida
+         */
         @Data
         public static class RelativeVelocity {
             private double kilometers_per_second;
@@ -57,6 +76,9 @@ public class NeoWsNeoData {
             private double miles_per_hour;
         }
 
+        /**
+         *Clase MissDistance que contiene la distancia de fallo del objeto NEO en diferentes unidades de medida
+         */
         @Data
         public static class MissDistance {
             private double astronomical;
